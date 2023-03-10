@@ -1,0 +1,44 @@
+# compose 파일 버전
+version: '3.3'
+services:
+  back_end:
+    build:
+     context: ./back_end
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - 5000:5000
+    environment:
+      - FLACK_APP=./src/app.py
+    volumes:
+      - ./back_end:/app
+    restart: always
+
+  nqinx:
+    build:
+      context: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./front_end/dist/:/usr/share/nginx/html/
+    restart: always
+
+  postgres:
+    build:
+      context: ./DB
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${PG_DB}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - TZ=Asia/Seoul
+    volumes:
+      - ./data;C/:/var/lib/postgresql/data
+    restart: always
+
+
+
