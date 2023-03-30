@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Magnify from 'vue-material-design-icons/Magnify.vue'
 
 Vue.config.productionTip = false
+Vue.component('magnify', Magnify)
 
 /* eslint-disable no-new */
 new Vue({
